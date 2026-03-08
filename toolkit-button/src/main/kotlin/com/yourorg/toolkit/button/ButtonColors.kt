@@ -29,4 +29,16 @@ data class ButtonColors(
     val borderColor: Color = Color.Transparent,
     /** Border colour when disabled. */
     val disabledBorderColor: Color = Color.Transparent,
+    /** Background when pressed / active. [Color.Unspecified] uses a computed default. */
+    val pressedContainerColor: Color = Color.Unspecified,
+    /** Foreground when pressed / active. [Color.Unspecified] uses a computed default. */
+    val pressedContentColor: Color = Color.Unspecified,
+    /** Background when focused. [Color.Unspecified] uses a computed default. */
+    val focusedContainerColor: Color = Color.Unspecified,
+    /** Foreground when focused. [Color.Unspecified] uses a computed default. */
+    val focusedContentColor: Color = Color.Unspecified,
+    /** Background when hovered. [Color.Unspecified] uses a computed default. */
+    val hoveredContainerColor: Color = Color.Unspecified,
+    /** Foreground when hovered. [Color.Unspecified] uses a computed default. */
+    val hoveredContentColor: Color = Color.Unspecified,
 )

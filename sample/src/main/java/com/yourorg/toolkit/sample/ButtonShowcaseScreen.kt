@@ -126,6 +126,23 @@ fun ButtonShowcaseScreen(modifier: Modifier = Modifier) {
             }
         }
 
+        ShowcaseSection(title = "Interaction States") {
+            Text(
+                text = "Tap / long-press buttons to see pressed state. " +
+                    "Use keyboard Tab for focus ring, mouse hover for hover state.",
+                fontSize = 11.sp,
+            )
+            ButtonVariant.entries.forEach { variant ->
+                Button(
+                    onClick = {},
+                    variant = variant,
+                    modifier = Modifier.fillMaxWidth(),
+                ) {
+                    Text("${variant.name} — tap me")
+                }
+            }
+        }
+
         ShowcaseSection(title = "Leading Icon") {
             ButtonVariant.entries.forEach { variant ->
                 Button(

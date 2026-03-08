@@ -48,4 +48,34 @@ internal object ButtonTokens {
     val iconSize = 18.dp
     val iconSpacing = 8.dp
     val labelTextSize = 14.sp
+
+    // State layer opacities (derived from Figma)
+    val hoverStateLayerAlpha = 0.08f
+    val focusStateLayerAlpha = 0.10f
+    val pressedStateLayerAlpha = 0.10f
+
+    // Focus ring
+    val focusRingWidth = 2.dp
+    val focusRingOffset = 2.dp
+
+    // Icon button — Small
+    val iconButtonSmallContainerSize = 36.dp
+    val iconButtonSmallIconSize = 16.dp
+    val iconButtonSmallBorderWidth = 0.dp
+    val iconButtonSmallCornerRadius = 8.dp
+
+    // Icon button — Medium
+    val iconButtonMediumContainerSize = 36.dp
+    val iconButtonMediumIconSize = 20.dp
+    val iconButtonMediumBorderWidth = 1.dp
+    val iconButtonMediumCornerRadius = 10.dp
+
+    // Icon button — Large
+    val iconButtonLargeContainerSize = 54.dp
+    val iconButtonLargeIconSize = 24.dp
+    val iconButtonLargeBorderWidth = 1.5.dp
+    val iconButtonLargeCornerRadius = 12.dp
+
+    // Icon button — Label
+    val iconButtonLabelSpacing = 8.dp
 }

@@ -34,6 +34,8 @@ import com.yourorg.toolkit.core.theme.ToolkitTheme
 
 enum class ShowcaseDestination(val label: String) {
     Button("Button Showcase"),
+    IconButton("IconButton Showcase"),
+    ToggleIconButton("ToggleIconButton Showcase"),
 }
 
 class MainActivity : ComponentActivity() {
@@ -69,6 +71,12 @@ class MainActivity : ComponentActivity() {
                 ) { innerPadding ->
                     when (current) {
                         ShowcaseDestination.Button -> ButtonShowcaseScreen(
+                            modifier = Modifier.padding(innerPadding),
+                        )
+                        ShowcaseDestination.IconButton -> IconButtonShowcaseScreen(
+                            modifier = Modifier.padding(innerPadding),
+                        )
+                        ShowcaseDestination.ToggleIconButton -> ToggleIconButtonShowcaseScreen(
                             modifier = Modifier.padding(innerPadding),
                         )
                         null -> HomeScreen(

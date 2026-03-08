@@ -1,11 +1,19 @@
 package com.yourorg.toolkit.button
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.border
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsFocusedAsState
+import androidx.compose.foundation.interaction.collectIsHoveredAsState
+import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.defaultMinSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button as M3Button
@@ -13,7 +21,10 @@ import androidx.compose.material3.ButtonDefaults as M3ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.role
@@ -40,25 +51,22 @@ enum class ButtonVariant { Primary, Secondary, Ghost, Destructive }
  */
 enum class ButtonSize { Small, Large }
 
+private const val STATE_ANIMATION_DURATION_MS = 120
+
+/**
+ * Resolves a state color: if the provided [stateColor] is [Color.Unspecified],
+ * falls back to [fallback].
+ */
+private fun resolveStateColor(stateColor: Color, fallback: Color): Color =
+    if (stateColor == Color.Unspecified) fallback else stateColor
+
 /**
  * A toolkit button that maps to Material 3's [M3Button] and is fully
  * customisable via [colors], [shape], [size], and [contentPadding].
  *
- * ```kotlin
- * Button(onClick = { /* ... */ }) { Text("Save") }
- *
- * Button(
- *     onClick = onDelete,
- *     variant = ButtonVariant.Destructive,
- * ) { Text("Delete account") }
- *
- * Button(onClick = onSubmit, isLoading = submitting) { Text("Submit") }
- *
- * Button(
- *     onClick = onAdd,
- *     leadingIcon = { Icon(Icons.Default.Add, contentDescription = null) },
- * ) { Text("Add item") }
- * ```
+ * Interaction states (pressed, focused, hovered) are animated automatically
+ * based on the [ButtonColors] state color properties. When state colors are
+ * [Color.Unspecified] the button falls back to the base enabled colors.
  *
  * @param onClick Called when the button is tapped. No-op while [isLoading] is true.
  * @param modifier Applied to the root layout node.
@@ -86,9 +94,32 @@ fun Button(
     contentPadding: PaddingValues = ButtonDefaults.contentPadding(size, hasLeadingIcon = leadingIcon != null),
     content: @Composable RowScope.() -> Unit,
 ) {
+    val interactionSource = remember { MutableInteractionSource() }
+    val isPressed by interactionSource.collectIsPressedAsState()
+    val isFocused by interactionSource.collectIsFocusedAsState()
+    val isHovered by interactionSource.collectIsHoveredAsState()
+
+    // Resolve effective container color: pressed > focused > hovered > default
+    val targetContainerColor = when {
+        isPressed -> resolveStateColor(colors.pressedContainerColor, colors.containerColor)
+        isFocused -> resolveStateColor(colors.focusedContainerColor, colors.containerColor)
+        isHovered -> resolveStateColor(colors.hoveredContainerColor, colors.containerColor)
+        else -> colors.containerColor
+    }
+    val targetContentColor = when {
+        isPressed -> resolveStateColor(colors.pressedContentColor, colors.contentColor)
+        isFocused -> resolveStateColor(colors.focusedContentColor, colors.contentColor)
+        isHovered -> resolveStateColor(colors.hoveredContentColor, colors.contentColor)
+        else -> colors.contentColor
+    }
+
+    val animSpec = tween<Color>(durationMillis = STATE_ANIMATION_DURATION_MS)
+    val animatedContainerColor by animateColorAsState(targetContainerColor, animSpec)
+    val animatedContentColor by animateColorAsState(targetContentColor, animSpec)
+
     val resolvedColors = M3ButtonDefaults.buttonColors(
-        containerColor = colors.containerColor,
-        contentColor = colors.contentColor,
+        containerColor = animatedContainerColor,
+        contentColor = animatedContentColor,
         disabledContainerColor = colors.disabledContainerColor,
         disabledContentColor = colors.disabledContentColor,
     )
@@ -97,9 +128,23 @@ fun Button(
         BorderStroke(width = 1.dp, color = if (enabled) colors.borderColor else colors.disabledBorderColor)
     } else null
 
+    // Focus ring modifier
+    val focusRingModifier = if (isFocused && enabled) {
+        Modifier
+            .padding(ButtonTokens.focusRingOffset)
+            .border(
+                width = ButtonTokens.focusRingWidth,
+                color = animatedContentColor,
+                shape = shape,
+            )
+    } else {
+        Modifier
+    }
+
     M3Button(
         onClick = onClick,
         modifier = modifier
+            .then(focusRingModifier)
             .defaultMinSize(minWidth = ButtonDefaults.minWidth, minHeight = ButtonDefaults.minHeight(size))
             .semantics { role = Role.Button },
         enabled = enabled && !isLoading,
@@ -107,6 +152,7 @@ fun Button(
         colors = resolvedColors,
         border = border,
         contentPadding = contentPadding,
+        interactionSource = interactionSource,
     ) {
         if (isLoading) {
             CircularProgressIndicator(

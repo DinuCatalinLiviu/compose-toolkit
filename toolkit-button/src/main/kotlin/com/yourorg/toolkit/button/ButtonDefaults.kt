@@ -5,6 +5,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.graphics.compositeOver
 import androidx.compose.ui.unit.Dp
 
 /**
@@ -62,6 +63,12 @@ object ButtonDefaults {
         disabledContentColor: Color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.38f),
         borderColor: Color = variantBorderColor(variant),
         disabledBorderColor: Color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.12f),
+        pressedContainerColor: Color = variantPressedContainerColor(variant, containerColor),
+        pressedContentColor: Color = variantPressedContentColor(variant, contentColor),
+        focusedContainerColor: Color = variantFocusedContainerColor(variant, containerColor),
+        focusedContentColor: Color = variantFocusedContentColor(variant, contentColor),
+        hoveredContainerColor: Color = variantHoveredContainerColor(variant, containerColor),
+        hoveredContentColor: Color = variantHoveredContentColor(variant, contentColor),
     ): ButtonColors = ButtonColors(
         containerColor = containerColor,
         contentColor = contentColor,
@@ -69,9 +76,15 @@ object ButtonDefaults {
         disabledContentColor = disabledContentColor,
         borderColor = borderColor,
         disabledBorderColor = disabledBorderColor,
+        pressedContainerColor = pressedContainerColor,
+        pressedContentColor = pressedContentColor,
+        focusedContainerColor = focusedContainerColor,
+        focusedContentColor = focusedContentColor,
+        hoveredContainerColor = hoveredContainerColor,
+        hoveredContentColor = hoveredContentColor,
     )
 
-    // Variant helpers
+    // ── Variant base color helpers ──────────────────────────────────────
 
     @Composable
     private fun variantContainerColor(variant: ButtonVariant): Color = when (variant) {
@@ -95,6 +108,66 @@ object ButtonDefaults {
         ButtonVariant.Ghost -> Color.Transparent
         else -> Color.Transparent
     }
+
+    // ── Pressed state ───────────────────────────────────────────────────
+
+    @Composable
+    private fun variantPressedContainerColor(variant: ButtonVariant, base: Color): Color =
+        when (variant) {
+            // Secondary / Ghost invert to black bg per Figma "Active" row
+            ButtonVariant.Secondary,
+            ButtonVariant.Ghost -> MaterialTheme.colorScheme.onSurface
+            // Primary / Destructive: lighter overlay
+            ButtonVariant.Primary,
+            ButtonVariant.Destructive -> MaterialTheme.colorScheme.onPrimary
+                .copy(alpha = ButtonTokens.pressedStateLayerAlpha)
+                .compositeOver(base)
+        }
+
+    @Composable
+    private fun variantPressedContentColor(variant: ButtonVariant, base: Color): Color =
+        when (variant) {
+            ButtonVariant.Secondary,
+            ButtonVariant.Ghost -> MaterialTheme.colorScheme.surface
+            ButtonVariant.Primary,
+            ButtonVariant.Destructive -> base
+        }
+
+    // ── Focused state ───────────────────────────────────────────────────
+
+    @Composable
+    private fun variantFocusedContainerColor(variant: ButtonVariant, base: Color): Color =
+        when (variant) {
+            ButtonVariant.Secondary,
+            ButtonVariant.Ghost -> MaterialTheme.colorScheme.onSurface
+                .copy(alpha = ButtonTokens.focusStateLayerAlpha)
+                .compositeOver(MaterialTheme.colorScheme.surface)
+            ButtonVariant.Primary,
+            ButtonVariant.Destructive -> MaterialTheme.colorScheme.onPrimary
+                .copy(alpha = ButtonTokens.focusStateLayerAlpha)
+                .compositeOver(base)
+        }
+
+    @Composable
+    private fun variantFocusedContentColor(variant: ButtonVariant, base: Color): Color = base
+
+    // ── Hovered state ───────────────────────────────────────────────────
+
+    @Composable
+    private fun variantHoveredContainerColor(variant: ButtonVariant, base: Color): Color =
+        when (variant) {
+            ButtonVariant.Secondary,
+            ButtonVariant.Ghost -> MaterialTheme.colorScheme.onSurface
+                .copy(alpha = ButtonTokens.hoverStateLayerAlpha)
+                .compositeOver(MaterialTheme.colorScheme.surface)
+            ButtonVariant.Primary,
+            ButtonVariant.Destructive -> MaterialTheme.colorScheme.onPrimary
+                .copy(alpha = ButtonTokens.hoverStateLayerAlpha)
+                .compositeOver(base)
+        }
+
+    @Composable
+    private fun variantHoveredContentColor(variant: ButtonVariant, base: Color): Color = base
 
     /** Minimum touch target width. */
     val minWidth: Dp get() = ButtonTokens.minWidth
