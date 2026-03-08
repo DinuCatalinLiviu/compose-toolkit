@@ -9,9 +9,9 @@ class ButtonVariantTest {
     fun buttonVariant_allValuesPresent() {
         val variants = ButtonVariant.values()
         assertEquals(4, variants.size)
-        assert(ButtonVariant.Primary     in variants)
-        assert(ButtonVariant.Secondary   in variants)
-        assert(ButtonVariant.Ghost       in variants)
+        assert(ButtonVariant.Primary in variants)
+        assert(ButtonVariant.Secondary in variants)
+        assert(ButtonVariant.Ghost in variants)
         assert(ButtonVariant.Destructive in variants)
     }
 }

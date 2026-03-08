@@ -22,19 +22,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.yourorg.toolkit.core.theme.ToolkitTheme
 
-// ── Variant enum ──────────────────────────────────────────────────────────────
-
 /**
  * Visual variants available for [Button].
  *
- * - [Primary]     — high-emphasis filled button; use for the single primary action.
- * - [Secondary]   — medium-emphasis outlined button; for secondary actions.
- * - [Ghost]       — low-emphasis text-only button; for tertiary / destructive-light actions.
+ * - [Primary] — high-emphasis filled button; use for the single primary action.
+ * - [Secondary] — medium-emphasis outlined button; for secondary actions.
+ * - [Ghost] — low-emphasis text-only button; for tertiary / destructive-light actions.
  * - [Destructive] — high-emphasis filled button using the error color role.
  */
 enum class ButtonVariant { Primary, Secondary, Ghost, Destructive }
-
-// ── Size enum ─────────────────────────────────────────────────────────────────
 
 /**
  * Size variants available for [Button].
@@ -44,8 +40,6 @@ enum class ButtonVariant { Primary, Secondary, Ghost, Destructive }
  */
 enum class ButtonSize { Small, Large }
 
-// ── Public composable ─────────────────────────────────────────────────────────
-
 /**
  * A toolkit button that maps to Material 3's [M3Button] and is fully
  * customisable via [colors], [shape], [size], and [contentPadding].
@@ -54,29 +48,29 @@ enum class ButtonSize { Small, Large }
  * Button(onClick = { /* ... */ }) { Text("Save") }
  *
  * Button(
- *     onClick  = onDelete,
- *     variant  = ButtonVariant.Destructive,
+ *     onClick = onDelete,
+ *     variant = ButtonVariant.Destructive,
  * ) { Text("Delete account") }
  *
  * Button(onClick = onSubmit, isLoading = submitting) { Text("Submit") }
  *
  * Button(
- *     onClick     = onAdd,
+ *     onClick = onAdd,
  *     leadingIcon = { Icon(Icons.Default.Add, contentDescription = null) },
  * ) { Text("Add item") }
  * ```
  *
- * @param onClick        Called when the button is tapped. No-op while [isLoading] is true.
- * @param modifier       Applied to the root layout node.
- * @param enabled        Controls whether the button can be interacted with.
- * @param variant        Selects the visual style. Defaults to [ButtonVariant.Primary].
- * @param size           Controls the button height and padding. Defaults to [ButtonSize.Large].
- * @param isLoading      When true, replaces content with a progress indicator and blocks interaction.
- * @param colors         Fine-grained color overrides. Defaults to [ButtonDefaults.colors].
- * @param shape          Corner shape. Defaults to [ButtonDefaults.shape].
- * @param contentPadding Internal padding around the content. When null, derived from [size] and [leadingIcon].
- * @param leadingIcon    Optional composable rendered before [content] with standard icon spacing.
- * @param content        The button's label / icon composable(s).
+ * @param onClick Called when the button is tapped. No-op while [isLoading] is true.
+ * @param modifier Applied to the root layout node.
+ * @param enabled Controls whether the button can be interacted with.
+ * @param variant Selects the visual style. Defaults to [ButtonVariant.Primary].
+ * @param size Controls the button height and padding. Defaults to [ButtonSize.Large].
+ * @param isLoading When true, replaces content with a progress indicator and blocks interaction.
+ * @param colors Fine-grained color overrides. Defaults to [ButtonDefaults.colors].
+ * @param shape Corner shape. Defaults to [ButtonDefaults.shape].
+ * @param leadingIcon Optional composable rendered before [content] with standard icon spacing.
+ * @param contentPadding Internal padding around the content. Derived from [size] and [leadingIcon] by default.
+ * @param content The button's label / icon composable(s).
  */
 @Composable
 fun Button(
@@ -93,10 +87,10 @@ fun Button(
     content: @Composable RowScope.() -> Unit,
 ) {
     val resolvedColors = M3ButtonDefaults.buttonColors(
-        containerColor         = colors.containerColor,
-        contentColor           = colors.contentColor,
+        containerColor = colors.containerColor,
+        contentColor = colors.contentColor,
         disabledContainerColor = colors.disabledContainerColor,
-        disabledContentColor   = colors.disabledContentColor,
+        disabledContentColor = colors.disabledContentColor,
     )
 
     val border = if (colors.borderColor.alpha > 0f) {
@@ -104,33 +98,33 @@ fun Button(
     } else null
 
     M3Button(
-        onClick        = onClick,
-        modifier       = modifier
-            .defaultMinSize(minWidth = ButtonDefaults.MinWidth, minHeight = ButtonDefaults.minHeight(size))
+        onClick = onClick,
+        modifier = modifier
+            .defaultMinSize(minWidth = ButtonDefaults.minWidth, minHeight = ButtonDefaults.minHeight(size))
             .semantics { role = Role.Button },
-        enabled        = enabled && !isLoading,
-        shape          = shape,
-        colors         = resolvedColors,
-        border         = border,
+        enabled = enabled && !isLoading,
+        shape = shape,
+        colors = resolvedColors,
+        border = border,
         contentPadding = contentPadding,
     ) {
         if (isLoading) {
             CircularProgressIndicator(
-                modifier  = Modifier.size(ButtonTokens.IconSize),
-                color     = colors.contentColor,
+                modifier = Modifier.size(ButtonTokens.iconSize),
+                color = colors.contentColor,
                 strokeWidth = 2.dp,
             )
         } else {
             if (leadingIcon != null) {
                 leadingIcon()
-                Spacer(Modifier.width(ButtonDefaults.IconSpacing))
+                Spacer(Modifier.width(ButtonDefaults.iconSpacing))
             }
             content()
         }
     }
 }
 
-// ── Previews ──────────────────────────────────────────────────────────────────
+// Previews
 
 @Preview(name = "Button — Primary (light)", showBackground = true)
 @Composable
@@ -225,10 +219,10 @@ private fun ButtonLoadingSmallPreview() {
 private fun ButtonLeadingIconPreview() {
     ToolkitTheme {
         Button(
-            onClick     = {},
+            onClick = {},
             leadingIcon = {
                 // Replace with an Icon composable using your project's icon set
-                Text("+", modifier = Modifier.size(ButtonTokens.IconSize))
+                Text("+", modifier = Modifier.size(ButtonTokens.iconSize))
             },
         ) { Text("Add item") }
     }

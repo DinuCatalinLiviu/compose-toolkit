@@ -6,7 +6,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.dp
 
 /**
  * Default values and token-backed helpers for [Button].
@@ -18,24 +17,24 @@ import androidx.compose.ui.unit.dp
 object ButtonDefaults {
 
     /** Default content padding for a [ButtonSize.Large] button without a leading icon. */
-    val ContentPadding: PaddingValues get() = ButtonTokens.LargeContentPadding
+    val contentPadding: PaddingValues get() = ButtonTokens.largeContentPadding
 
     /** Default content padding when a [ButtonSize.Large] button has a leading icon. */
-    val IconContentPadding: PaddingValues get() = ButtonTokens.LargeIconContentPadding
+    val iconContentPadding: PaddingValues get() = ButtonTokens.largeIconContentPadding
 
     /** Spacing between a leading icon and the button label. */
-    val IconSpacing: Dp get() = ButtonTokens.IconSpacing
+    val iconSpacing: Dp get() = ButtonTokens.iconSpacing
 
     /** Returns the appropriate content padding for [size], with or without a leading icon. */
     fun contentPadding(size: ButtonSize, hasLeadingIcon: Boolean = false): PaddingValues = when (size) {
-        ButtonSize.Large -> if (hasLeadingIcon) ButtonTokens.LargeIconContentPadding else ButtonTokens.LargeContentPadding
-        ButtonSize.Small -> if (hasLeadingIcon) ButtonTokens.SmallIconContentPadding else ButtonTokens.SmallContentPadding
+        ButtonSize.Large -> if (hasLeadingIcon) ButtonTokens.largeIconContentPadding else ButtonTokens.largeContentPadding
+        ButtonSize.Small -> if (hasLeadingIcon) ButtonTokens.smallIconContentPadding else ButtonTokens.smallContentPadding
     }
 
     /** Returns the minimum height token for [size]. */
     fun minHeight(size: ButtonSize): Dp = when (size) {
-        ButtonSize.Large -> ButtonTokens.LargeMinHeight
-        ButtonSize.Small -> ButtonTokens.SmallMinHeight
+        ButtonSize.Large -> ButtonTokens.largeMinHeight
+        ButtonSize.Small -> ButtonTokens.smallMinHeight
     }
 
     /**
@@ -64,42 +63,42 @@ object ButtonDefaults {
         borderColor: Color = variantBorderColor(variant),
         disabledBorderColor: Color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.12f),
     ): ButtonColors = ButtonColors(
-        containerColor        = containerColor,
-        contentColor          = contentColor,
+        containerColor = containerColor,
+        contentColor = contentColor,
         disabledContainerColor = disabledContainerColor,
-        disabledContentColor  = disabledContentColor,
-        borderColor           = borderColor,
-        disabledBorderColor   = disabledBorderColor,
+        disabledContentColor = disabledContentColor,
+        borderColor = borderColor,
+        disabledBorderColor = disabledBorderColor,
     )
 
-    // ── Variant helpers ───────────────────────────────────────────────────────
+    // Variant helpers
 
     @Composable
     private fun variantContainerColor(variant: ButtonVariant): Color = when (variant) {
-        ButtonVariant.Primary     -> MaterialTheme.colorScheme.primary
-        ButtonVariant.Secondary   -> Color.Transparent
-        ButtonVariant.Ghost       -> Color.Transparent
+        ButtonVariant.Primary -> MaterialTheme.colorScheme.primary
+        ButtonVariant.Secondary -> Color.Transparent
+        ButtonVariant.Ghost -> Color.Transparent
         ButtonVariant.Destructive -> MaterialTheme.colorScheme.error
     }
 
     @Composable
     private fun variantContentColor(variant: ButtonVariant): Color = when (variant) {
-        ButtonVariant.Primary     -> MaterialTheme.colorScheme.onPrimary
-        ButtonVariant.Secondary   -> MaterialTheme.colorScheme.primary
-        ButtonVariant.Ghost       -> MaterialTheme.colorScheme.primary
+        ButtonVariant.Primary -> MaterialTheme.colorScheme.onPrimary
+        ButtonVariant.Secondary -> MaterialTheme.colorScheme.primary
+        ButtonVariant.Ghost -> MaterialTheme.colorScheme.primary
         ButtonVariant.Destructive -> MaterialTheme.colorScheme.onError
     }
 
     @Composable
     private fun variantBorderColor(variant: ButtonVariant): Color = when (variant) {
         ButtonVariant.Secondary -> MaterialTheme.colorScheme.outline
-        ButtonVariant.Ghost     -> Color.Transparent
-        else                    -> Color.Transparent
+        ButtonVariant.Ghost -> Color.Transparent
+        else -> Color.Transparent
     }
 
     /** Minimum touch target width. */
-    val MinWidth: Dp get() = ButtonTokens.MinWidth
+    val minWidth: Dp get() = ButtonTokens.minWidth
 
     /** Minimum touch target height (48 dp for WCAG AA). */
-    val MinHeight: Dp get() = ButtonTokens.MinHeight
+    val minHeightDefault: Dp get() = ButtonTokens.largeMinHeight
 }

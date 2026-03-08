@@ -10,15 +10,15 @@ import androidx.compose.ui.unit.dp
  */
 object ToolkitSpacing {
     /** 4 dp */
-    val xs  = 4.dp
+    val xs = 4.dp
     /** 8 dp */
-    val sm  = 8.dp
+    val sm = 8.dp
     /** 16 dp */
-    val md  = 16.dp
+    val md = 16.dp
     /** 24 dp */
-    val lg  = 24.dp
+    val lg = 24.dp
     /** 32 dp */
-    val xl  = 32.dp
+    val xl = 32.dp
     /** 48 dp */
     val xxl = 48.dp
 }

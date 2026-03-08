@@ -11,18 +11,14 @@ import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.text.font.FontFamily
 
-// ── Composition locals ────────────────────────────────────────────────────────
-
-private val LocalToolkitColorScheme = staticCompositionLocalOf { ToolkitColorScheme.default() }
+private val localToolkitColorScheme = staticCompositionLocalOf { ToolkitColorScheme.default() }
 
 /** Retrieves the current [ToolkitColorScheme] from the nearest [ToolkitTheme] ancestor. */
 object ToolkitTheme {
     val colorScheme: ToolkitColorScheme
         @Composable @ReadOnlyComposable
-        get() = LocalToolkitColorScheme.current
+        get() = localToolkitColorScheme.current
 }
-
-// ── Theme entry point ─────────────────────────────────────────────────────────
 
 /**
  * Root theme wrapper for all toolkit components.
@@ -33,73 +29,72 @@ object ToolkitTheme {
  * All parameters have sensible neutral defaults. Consuming apps should
  * supply their own values to apply brand identity.
  *
- * @param colorScheme   Color roles for the current theme mode. Use
+ * @param colorScheme Color roles for the current theme mode. Use
  *   [ToolkitColorScheme.default] (light) or [ToolkitColorScheme.dark] as starting
  *   points, or construct a fully custom instance.
- * @param fontFamily    Font family applied to the Material 3 typography scale.
+ * @param fontFamily Font family applied to the Material 3 typography scale.
  *   Defaults to the system font; override to match your brand typeface.
- * @param darkTheme     When `true` the [colorScheme] is treated as a dark scheme.
+ * @param darkTheme When `true` the [colorScheme] is treated as a dark scheme.
  *   Defaults to the system setting.
- * @param content       Screen content rendered inside the theme.
+ * @param content Screen content rendered inside the theme.
  */
 @Composable
 fun ToolkitTheme(
     colorScheme: ToolkitColorScheme = if (isSystemInDarkTheme()) ToolkitColorScheme.dark()
-                                      else ToolkitColorScheme.default(),
+    else ToolkitColorScheme.default(),
     fontFamily: FontFamily = FontFamily.Default,
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit,
 ) {
-    // Map toolkit color scheme to Material 3 color scheme so Material components
-    // (Text, Surface, etc.) also benefit from the tokens.
+    // Map toolkit color scheme to Material 3 so Material components benefit from the tokens too.
     val m3ColorScheme = if (darkTheme) {
         darkColorScheme(
-            primary             = colorScheme.primary,
-            onPrimary           = colorScheme.onPrimary,
-            primaryContainer    = colorScheme.primaryContainer,
-            onPrimaryContainer  = colorScheme.onPrimaryContainer,
-            secondary           = colorScheme.secondary,
-            onSecondary         = colorScheme.onSecondary,
-            secondaryContainer  = colorScheme.secondaryContainer,
+            primary = colorScheme.primary,
+            onPrimary = colorScheme.onPrimary,
+            primaryContainer = colorScheme.primaryContainer,
+            onPrimaryContainer = colorScheme.onPrimaryContainer,
+            secondary = colorScheme.secondary,
+            onSecondary = colorScheme.onSecondary,
+            secondaryContainer = colorScheme.secondaryContainer,
             onSecondaryContainer = colorScheme.onSecondaryContainer,
-            background          = colorScheme.background,
-            onBackground        = colorScheme.onBackground,
-            surface             = colorScheme.surface,
-            onSurface           = colorScheme.onSurface,
-            surfaceVariant      = colorScheme.surfaceVariant,
-            onSurfaceVariant    = colorScheme.onSurfaceVariant,
-            outline             = colorScheme.outline,
-            error               = colorScheme.error,
-            onError             = colorScheme.onError,
+            background = colorScheme.background,
+            onBackground = colorScheme.onBackground,
+            surface = colorScheme.surface,
+            onSurface = colorScheme.onSurface,
+            surfaceVariant = colorScheme.surfaceVariant,
+            onSurfaceVariant = colorScheme.onSurfaceVariant,
+            outline = colorScheme.outline,
+            error = colorScheme.error,
+            onError = colorScheme.onError,
         )
     } else {
         lightColorScheme(
-            primary             = colorScheme.primary,
-            onPrimary           = colorScheme.onPrimary,
-            primaryContainer    = colorScheme.primaryContainer,
-            onPrimaryContainer  = colorScheme.onPrimaryContainer,
-            secondary           = colorScheme.secondary,
-            onSecondary         = colorScheme.onSecondary,
-            secondaryContainer  = colorScheme.secondaryContainer,
+            primary = colorScheme.primary,
+            onPrimary = colorScheme.onPrimary,
+            primaryContainer = colorScheme.primaryContainer,
+            onPrimaryContainer = colorScheme.onPrimaryContainer,
+            secondary = colorScheme.secondary,
+            onSecondary = colorScheme.onSecondary,
+            secondaryContainer = colorScheme.secondaryContainer,
             onSecondaryContainer = colorScheme.onSecondaryContainer,
-            background          = colorScheme.background,
-            onBackground        = colorScheme.onBackground,
-            surface             = colorScheme.surface,
-            onSurface           = colorScheme.onSurface,
-            surfaceVariant      = colorScheme.surfaceVariant,
-            onSurfaceVariant    = colorScheme.onSurfaceVariant,
-            outline             = colorScheme.outline,
-            error               = colorScheme.error,
-            onError             = colorScheme.onError,
+            background = colorScheme.background,
+            onBackground = colorScheme.onBackground,
+            surface = colorScheme.surface,
+            onSurface = colorScheme.onSurface,
+            surfaceVariant = colorScheme.surfaceVariant,
+            onSurfaceVariant = colorScheme.onSurfaceVariant,
+            outline = colorScheme.outline,
+            error = colorScheme.error,
+            onError = colorScheme.onError,
         )
     }
 
-    CompositionLocalProvider(LocalToolkitColorScheme provides colorScheme) {
+    CompositionLocalProvider(localToolkitColorScheme provides colorScheme) {
         MaterialTheme(
             colorScheme = m3ColorScheme,
-            typography  = toolkitTypography(fontFamily),
-            shapes      = Shapes(), // Material 3 defaults; expose ToolkitShapes later
-            content     = content,
+            typography = toolkitTypography(fontFamily),
+            shapes = Shapes(), // Material 3 defaults; expose ToolkitShapes later
+            content = content,
         )
     }
 }

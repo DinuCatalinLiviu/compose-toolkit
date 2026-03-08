@@ -12,47 +12,40 @@ import androidx.compose.ui.unit.sp
  * by reaching into tokens directly.
  */
 internal object ButtonTokens {
-    val MinWidth       = 64.dp
+    val minWidth = 64.dp
 
     // Size — Large (default, WCAG AA minimum touch target)
-    val LargeMinHeight        = 48.dp
-    val LargeHorizontalPadding = 24.dp
-    val LargeVerticalPadding   = 12.dp
-    val LargeContentPadding    = PaddingValues(
-        horizontal = LargeHorizontalPadding,
-        vertical   = LargeVerticalPadding,
+    val largeMinHeight = 48.dp
+    val largeHorizontalPadding = 24.dp
+    val largeVerticalPadding = 12.dp
+    val largeContentPadding = PaddingValues(
+        horizontal = largeHorizontalPadding,
+        vertical = largeVerticalPadding,
     )
-    val LargeIconContentPadding = PaddingValues(
-        start  = 16.dp,
-        end    = LargeHorizontalPadding,
-        top    = LargeVerticalPadding,
-        bottom = LargeVerticalPadding,
+    val largeIconContentPadding = PaddingValues(
+        start = 16.dp,
+        end = largeHorizontalPadding,
+        top = largeVerticalPadding,
+        bottom = largeVerticalPadding,
     )
 
     // Size — Small
-    val SmallMinHeight        = 36.dp
-    val SmallHorizontalPadding = 12.dp
-    val SmallVerticalPadding   = 8.dp
-    val SmallContentPadding    = PaddingValues(
-        horizontal = SmallHorizontalPadding,
-        vertical   = SmallVerticalPadding,
+    val smallMinHeight = 36.dp
+    val smallHorizontalPadding = 12.dp
+    val smallVerticalPadding = 8.dp
+    val smallContentPadding = PaddingValues(
+        horizontal = smallHorizontalPadding,
+        vertical = smallVerticalPadding,
     )
-    val SmallIconContentPadding = PaddingValues(
-        start  = 10.dp,
-        end    = SmallHorizontalPadding,
-        top    = SmallVerticalPadding,
-        bottom = SmallVerticalPadding,
+    val smallIconContentPadding = PaddingValues(
+        start = 10.dp,
+        end = smallHorizontalPadding,
+        top = smallVerticalPadding,
+        bottom = smallVerticalPadding,
     )
 
     // Shared
-    val IconSize      = 18.dp
-    val IconSpacing   = 8.dp
-    val LabelTextSize = 14.sp
-
-    // Legacy aliases — kept so existing ButtonDefaults references compile
-    val MinHeight         get() = LargeMinHeight
-    val HorizontalPadding get() = LargeHorizontalPadding
-    val VerticalPadding   get() = LargeVerticalPadding
-    val ContentPadding    get() = LargeContentPadding
-    val IconContentPadding get() = LargeIconContentPadding
+    val iconSize = 18.dp
+    val iconSpacing = 8.dp
+    val labelTextSize = 14.sp
 }
