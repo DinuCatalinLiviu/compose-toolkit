@@ -21,6 +21,38 @@ object ToolkitTheme {
 }
 
 /**
+ * Token-based theme wrapper that auto-switches between light and dark schemes.
+ *
+ * Define your brand tokens once by implementing [ToolkitColorTokens] and pass
+ * the instance here. The library builds the appropriate [ToolkitColorScheme]
+ * based on [darkTheme].
+ *
+ * @param colorTokens Brand color tokens. Defaults to neutral, unbranded values.
+ * @param fontFamily Font family applied to the Material 3 typography scale.
+ * @param darkTheme When `true` the dark variant of the tokens is used.
+ * @param content Screen content rendered inside the theme.
+ */
+@Composable
+fun ToolkitTheme(
+    colorTokens: ToolkitColorTokens = ToolkitColorTokens.default(),
+    fontFamily: FontFamily = FontFamily.Default,
+    darkTheme: Boolean = isSystemInDarkTheme(),
+    content: @Composable () -> Unit,
+) {
+    val colorScheme = if (darkTheme) {
+        ToolkitColorScheme.darkFromTokens(colorTokens)
+    } else {
+        ToolkitColorScheme.fromTokens(colorTokens)
+    }
+    ToolkitTheme(
+        colorScheme = colorScheme,
+        fontFamily = fontFamily,
+        darkTheme = darkTheme,
+        content = content,
+    )
+}
+
+/**
  * Root theme wrapper for all toolkit components.
  *
  * Wrap your app (or a section of it) with this composable to provide
@@ -40,8 +72,7 @@ object ToolkitTheme {
  */
 @Composable
 fun ToolkitTheme(
-    colorScheme: ToolkitColorScheme = if (isSystemInDarkTheme()) ToolkitColorScheme.dark()
-    else ToolkitColorScheme.default(),
+    colorScheme: ToolkitColorScheme,
     fontFamily: FontFamily = FontFamily.Default,
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit,

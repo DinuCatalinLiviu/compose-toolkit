@@ -10,7 +10,11 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -24,6 +28,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 
 import com.yourorg.toolkit.button.Button
+import com.yourorg.toolkit.core.theme.ToolkitColorTokens
 import com.yourorg.toolkit.core.theme.ToolkitSpacing
 import com.yourorg.toolkit.core.theme.ToolkitTheme
 
@@ -37,7 +42,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            ToolkitTheme {
+            ToolkitTheme(colorTokens = ToolkitColorTokens.default()) {
                 var current by remember { mutableStateOf<ShowcaseDestination?>(null) }
 
                 // Handle system back press to return to the home screen
@@ -55,7 +60,7 @@ class MainActivity : ComponentActivity() {
                             navigationIcon = {
                                 if (current != null) {
                                     IconButton(onClick = { current = null }) {
-                                        Text("←")
+                                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
                                     }
                                 }
                             },

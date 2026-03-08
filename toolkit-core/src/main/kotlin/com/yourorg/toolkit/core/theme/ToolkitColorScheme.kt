@@ -33,54 +33,60 @@ data class ToolkitColorScheme(
     val onError: Color,
 ) {
     companion object {
-        /** Neutral light-theme defaults — replace via [ToolkitTheme] in your app. */
-        fun default(): ToolkitColorScheme = ToolkitColorScheme(
-            primary = ToolkitColorTokens.primary,
-            onPrimary = ToolkitColorTokens.onPrimary,
-            primaryContainer = ToolkitColorTokens.primaryContainer,
-            onPrimaryContainer = ToolkitColorTokens.onPrimaryContainer,
-            secondary = ToolkitColorTokens.secondary,
-            onSecondary = ToolkitColorTokens.onSecondary,
-            secondaryContainer = ToolkitColorTokens.secondaryContainer,
-            onSecondaryContainer = ToolkitColorTokens.onSecondaryContainer,
-            background = ToolkitColorTokens.background,
-            onBackground = ToolkitColorTokens.onBackground,
-            surface = ToolkitColorTokens.surface,
-            onSurface = ToolkitColorTokens.onSurface,
-            surfaceVariant = ToolkitColorTokens.surfaceVariant,
-            onSurfaceVariant = ToolkitColorTokens.onSurfaceVariant,
-            outline = ToolkitColorTokens.outline,
-            success = ToolkitColorTokens.success,
-            onSuccess = ToolkitColorTokens.onSuccess,
-            warning = ToolkitColorTokens.warning,
-            onWarning = ToolkitColorTokens.onWarning,
-            error = ToolkitColorTokens.error,
-            onError = ToolkitColorTokens.onError,
+        /** Builds a light-theme [ToolkitColorScheme] from the given [tokens]. */
+        fun fromTokens(tokens: ToolkitColorTokens): ToolkitColorScheme = ToolkitColorScheme(
+            primary = tokens.primary,
+            onPrimary = tokens.onPrimary,
+            primaryContainer = tokens.primaryContainer,
+            onPrimaryContainer = tokens.onPrimaryContainer,
+            secondary = tokens.secondary,
+            onSecondary = tokens.onSecondary,
+            secondaryContainer = tokens.secondaryContainer,
+            onSecondaryContainer = tokens.onSecondaryContainer,
+            background = tokens.background,
+            onBackground = tokens.onBackground,
+            surface = tokens.surface,
+            onSurface = tokens.onSurface,
+            surfaceVariant = tokens.surfaceVariant,
+            onSurfaceVariant = tokens.onSurfaceVariant,
+            outline = tokens.outline,
+            success = tokens.success,
+            onSuccess = tokens.onSuccess,
+            warning = tokens.warning,
+            onWarning = tokens.onWarning,
+            error = tokens.error,
+            onError = tokens.onError,
         )
 
-        /** Neutral dark-theme defaults — replace via [ToolkitTheme] in your app. */
-        fun dark(): ToolkitColorScheme = ToolkitColorScheme(
-            primary = ToolkitColorTokens.primaryDark,
-            onPrimary = ToolkitColorTokens.onPrimaryDark,
-            primaryContainer = ToolkitColorTokens.primaryContainerDark,
-            onPrimaryContainer = ToolkitColorTokens.onPrimaryContainerDark,
-            secondary = ToolkitColorTokens.secondaryDark,
-            onSecondary = ToolkitColorTokens.onSecondaryDark,
-            secondaryContainer = ToolkitColorTokens.secondaryContainerDark,
-            onSecondaryContainer = ToolkitColorTokens.onSecondaryContainerDark,
-            background = ToolkitColorTokens.backgroundDark,
-            onBackground = ToolkitColorTokens.onBackgroundDark,
-            surface = ToolkitColorTokens.surfaceDark,
-            onSurface = ToolkitColorTokens.onSurfaceDark,
-            surfaceVariant = ToolkitColorTokens.surfaceVariantDark,
-            onSurfaceVariant = ToolkitColorTokens.onSurfaceVariantDark,
-            outline = ToolkitColorTokens.outlineDark,
-            success = ToolkitColorTokens.success,
-            onSuccess = ToolkitColorTokens.onSuccess,
-            warning = ToolkitColorTokens.warning,
-            onWarning = ToolkitColorTokens.onWarning,
-            error = ToolkitColorTokens.error,
-            onError = ToolkitColorTokens.onError,
+        /** Builds a dark-theme [ToolkitColorScheme] from the given [tokens]. */
+        fun darkFromTokens(tokens: ToolkitColorTokens): ToolkitColorScheme = ToolkitColorScheme(
+            primary = tokens.primaryDark,
+            onPrimary = tokens.onPrimaryDark,
+            primaryContainer = tokens.primaryContainerDark,
+            onPrimaryContainer = tokens.onPrimaryContainerDark,
+            secondary = tokens.secondaryDark,
+            onSecondary = tokens.onSecondaryDark,
+            secondaryContainer = tokens.secondaryContainerDark,
+            onSecondaryContainer = tokens.onSecondaryContainerDark,
+            background = tokens.backgroundDark,
+            onBackground = tokens.onBackgroundDark,
+            surface = tokens.surfaceDark,
+            onSurface = tokens.onSurfaceDark,
+            surfaceVariant = tokens.surfaceVariantDark,
+            onSurfaceVariant = tokens.onSurfaceVariantDark,
+            outline = tokens.outlineDark,
+            success = tokens.success,
+            onSuccess = tokens.onSuccess,
+            warning = tokens.warning,
+            onWarning = tokens.onWarning,
+            error = tokens.error,
+            onError = tokens.onError,
         )
+
+        /** Neutral light-theme defaults — replace via [ToolkitTheme] in your app. */
+        fun default(): ToolkitColorScheme = fromTokens(ToolkitColorTokens.default())
+
+        /** Neutral dark-theme defaults — replace via [ToolkitTheme] in your app. */
+        fun dark(): ToolkitColorScheme = darkFromTokens(ToolkitColorTokens.default())
     }
 }
