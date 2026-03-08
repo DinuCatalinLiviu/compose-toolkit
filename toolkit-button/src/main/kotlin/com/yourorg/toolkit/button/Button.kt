@@ -4,9 +4,13 @@ import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.defaultMinSize
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button as M3Button
 import androidx.compose.material3.ButtonDefaults as M3ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -30,11 +34,21 @@ import com.yourorg.toolkit.core.theme.ToolkitTheme
  */
 enum class ButtonVariant { Primary, Secondary, Ghost, Destructive }
 
+// ── Size enum ─────────────────────────────────────────────────────────────────
+
+/**
+ * Size variants available for [Button].
+ *
+ * - [Large] — default; 48 dp min-height, meets WCAG AA touch target.
+ * - [Small] — 36 dp min-height; use in dense layouts where space is constrained.
+ */
+enum class ButtonSize { Small, Large }
+
 // ── Public composable ─────────────────────────────────────────────────────────
 
 /**
  * A toolkit button that maps to Material 3's [M3Button] and is fully
- * customisable via [colors], [shape], and [contentPadding].
+ * customisable via [colors], [shape], [size], and [contentPadding].
  *
  * ```kotlin
  * Button(onClick = { /* ... */ }) { Text("Save") }
@@ -43,15 +57,25 @@ enum class ButtonVariant { Primary, Secondary, Ghost, Destructive }
  *     onClick  = onDelete,
  *     variant  = ButtonVariant.Destructive,
  * ) { Text("Delete account") }
+ *
+ * Button(onClick = onSubmit, isLoading = submitting) { Text("Submit") }
+ *
+ * Button(
+ *     onClick     = onAdd,
+ *     leadingIcon = { Icon(Icons.Default.Add, contentDescription = null) },
+ * ) { Text("Add item") }
  * ```
  *
- * @param onClick        Called when the button is tapped.
+ * @param onClick        Called when the button is tapped. No-op while [isLoading] is true.
  * @param modifier       Applied to the root layout node.
  * @param enabled        Controls whether the button can be interacted with.
  * @param variant        Selects the visual style. Defaults to [ButtonVariant.Primary].
+ * @param size           Controls the button height and padding. Defaults to [ButtonSize.Large].
+ * @param isLoading      When true, replaces content with a progress indicator and blocks interaction.
  * @param colors         Fine-grained color overrides. Defaults to [ButtonDefaults.colors].
  * @param shape          Corner shape. Defaults to [ButtonDefaults.shape].
- * @param contentPadding Internal padding around the content. Defaults to [ButtonDefaults.ContentPadding].
+ * @param contentPadding Internal padding around the content. When null, derived from [size] and [leadingIcon].
+ * @param leadingIcon    Optional composable rendered before [content] with standard icon spacing.
  * @param content        The button's label / icon composable(s).
  */
 @Composable
@@ -60,9 +84,12 @@ fun Button(
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
     variant: ButtonVariant = ButtonVariant.Primary,
+    size: ButtonSize = ButtonSize.Large,
+    isLoading: Boolean = false,
     colors: ButtonColors = ButtonDefaults.colors(variant),
     shape: Shape = ButtonDefaults.shape,
-    contentPadding: PaddingValues = ButtonDefaults.ContentPadding,
+    leadingIcon: @Composable (() -> Unit)? = null,
+    contentPadding: PaddingValues = ButtonDefaults.contentPadding(size, hasLeadingIcon = leadingIcon != null),
     content: @Composable RowScope.() -> Unit,
 ) {
     val resolvedColors = M3ButtonDefaults.buttonColors(
@@ -79,15 +106,28 @@ fun Button(
     M3Button(
         onClick        = onClick,
         modifier       = modifier
-            .defaultMinSize(minWidth = ButtonDefaults.MinWidth, minHeight = ButtonDefaults.MinHeight)
+            .defaultMinSize(minWidth = ButtonDefaults.MinWidth, minHeight = ButtonDefaults.minHeight(size))
             .semantics { role = Role.Button },
-        enabled        = enabled,
+        enabled        = enabled && !isLoading,
         shape          = shape,
         colors         = resolvedColors,
         border         = border,
         contentPadding = contentPadding,
-        content        = content,
-    )
+    ) {
+        if (isLoading) {
+            CircularProgressIndicator(
+                modifier  = Modifier.size(ButtonTokens.IconSize),
+                color     = colors.contentColor,
+                strokeWidth = 2.dp,
+            )
+        } else {
+            if (leadingIcon != null) {
+                leadingIcon()
+                Spacer(Modifier.width(ButtonDefaults.IconSpacing))
+            }
+            content()
+        }
+    }
 }
 
 // ── Previews ──────────────────────────────────────────────────────────────────
@@ -145,5 +185,51 @@ private fun ButtonPrimaryDarkPreview() {
 private fun ButtonDisabledDarkPreview() {
     ToolkitTheme {
         Button(onClick = {}, enabled = false) { Text("Disabled") }
+    }
+}
+
+@Preview(name = "Button — Small", showBackground = true)
+@Composable
+private fun ButtonSmallPreview() {
+    ToolkitTheme {
+        Button(onClick = {}, size = ButtonSize.Small) { Text("Small") }
+    }
+}
+
+@Preview(name = "Button — Small Secondary", showBackground = true)
+@Composable
+private fun ButtonSmallSecondaryPreview() {
+    ToolkitTheme {
+        Button(onClick = {}, size = ButtonSize.Small, variant = ButtonVariant.Secondary) { Text("Small") }
+    }
+}
+
+@Preview(name = "Button — Loading (Large)", showBackground = true)
+@Composable
+private fun ButtonLoadingLargePreview() {
+    ToolkitTheme {
+        Button(onClick = {}, isLoading = true) { Text("Submit") }
+    }
+}
+
+@Preview(name = "Button — Loading (Small)", showBackground = true)
+@Composable
+private fun ButtonLoadingSmallPreview() {
+    ToolkitTheme {
+        Button(onClick = {}, size = ButtonSize.Small, isLoading = true) { Text("Submit") }
+    }
+}
+
+@Preview(name = "Button — Leading Icon", showBackground = true)
+@Composable
+private fun ButtonLeadingIconPreview() {
+    ToolkitTheme {
+        Button(
+            onClick     = {},
+            leadingIcon = {
+                // Replace with an Icon composable using your project's icon set
+                Text("+", modifier = Modifier.size(ButtonTokens.IconSize))
+            },
+        ) { Text("Add item") }
     }
 }

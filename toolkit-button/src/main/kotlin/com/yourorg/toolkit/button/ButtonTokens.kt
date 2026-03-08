@@ -13,20 +13,46 @@ import androidx.compose.ui.unit.sp
  */
 internal object ButtonTokens {
     val MinWidth       = 64.dp
-    val MinHeight      = 48.dp   // WCAG AA minimum touch target
-    val IconSize       = 18.dp
-    val HorizontalPadding = 24.dp
-    val VerticalPadding   = 12.dp
-    val ContentPadding = PaddingValues(
-        horizontal = HorizontalPadding,
-        vertical   = VerticalPadding,
+
+    // Size — Large (default, WCAG AA minimum touch target)
+    val LargeMinHeight        = 48.dp
+    val LargeHorizontalPadding = 24.dp
+    val LargeVerticalPadding   = 12.dp
+    val LargeContentPadding    = PaddingValues(
+        horizontal = LargeHorizontalPadding,
+        vertical   = LargeVerticalPadding,
     )
-    val IconContentPadding = PaddingValues(
+    val LargeIconContentPadding = PaddingValues(
         start  = 16.dp,
-        end    = 24.dp,
-        top    = VerticalPadding,
-        bottom = VerticalPadding,
+        end    = LargeHorizontalPadding,
+        top    = LargeVerticalPadding,
+        bottom = LargeVerticalPadding,
     )
-    val IconSpacing    = 8.dp
-    val LabelTextSize  = 14.sp
+
+    // Size — Small
+    val SmallMinHeight        = 36.dp
+    val SmallHorizontalPadding = 12.dp
+    val SmallVerticalPadding   = 8.dp
+    val SmallContentPadding    = PaddingValues(
+        horizontal = SmallHorizontalPadding,
+        vertical   = SmallVerticalPadding,
+    )
+    val SmallIconContentPadding = PaddingValues(
+        start  = 10.dp,
+        end    = SmallHorizontalPadding,
+        top    = SmallVerticalPadding,
+        bottom = SmallVerticalPadding,
+    )
+
+    // Shared
+    val IconSize      = 18.dp
+    val IconSpacing   = 8.dp
+    val LabelTextSize = 14.sp
+
+    // Legacy aliases — kept so existing ButtonDefaults references compile
+    val MinHeight         get() = LargeMinHeight
+    val HorizontalPadding get() = LargeHorizontalPadding
+    val VerticalPadding   get() = LargeVerticalPadding
+    val ContentPadding    get() = LargeContentPadding
+    val IconContentPadding get() = LargeIconContentPadding
 }

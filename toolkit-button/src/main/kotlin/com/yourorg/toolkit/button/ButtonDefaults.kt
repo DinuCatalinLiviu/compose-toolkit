@@ -17,14 +17,26 @@ import androidx.compose.ui.unit.dp
  */
 object ButtonDefaults {
 
-    /** Default content padding for a button without a leading icon. */
-    val ContentPadding: PaddingValues get() = ButtonTokens.ContentPadding
+    /** Default content padding for a [ButtonSize.Large] button without a leading icon. */
+    val ContentPadding: PaddingValues get() = ButtonTokens.LargeContentPadding
 
-    /** Default content padding when the button has a leading icon. */
-    val IconContentPadding: PaddingValues get() = ButtonTokens.IconContentPadding
+    /** Default content padding when a [ButtonSize.Large] button has a leading icon. */
+    val IconContentPadding: PaddingValues get() = ButtonTokens.LargeIconContentPadding
 
     /** Spacing between a leading icon and the button label. */
     val IconSpacing: Dp get() = ButtonTokens.IconSpacing
+
+    /** Returns the appropriate content padding for [size], with or without a leading icon. */
+    fun contentPadding(size: ButtonSize, hasLeadingIcon: Boolean = false): PaddingValues = when (size) {
+        ButtonSize.Large -> if (hasLeadingIcon) ButtonTokens.LargeIconContentPadding else ButtonTokens.LargeContentPadding
+        ButtonSize.Small -> if (hasLeadingIcon) ButtonTokens.SmallIconContentPadding else ButtonTokens.SmallContentPadding
+    }
+
+    /** Returns the minimum height token for [size]. */
+    fun minHeight(size: ButtonSize): Dp = when (size) {
+        ButtonSize.Large -> ButtonTokens.LargeMinHeight
+        ButtonSize.Small -> ButtonTokens.SmallMinHeight
+    }
 
     /**
      * Returns the default shape for a [Button].
