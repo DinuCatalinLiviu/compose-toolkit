@@ -84,7 +84,7 @@ object ButtonDefaults {
         hoveredContentColor = hoveredContentColor,
     )
 
-    // ── Variant base color helpers ──────────────────────────────────────
+    // Variant base color helpers
 
     @Composable
     private fun variantContainerColor(variant: ButtonVariant): Color = when (variant) {
@@ -109,7 +109,7 @@ object ButtonDefaults {
         else -> Color.Transparent
     }
 
-    // ── Pressed state ───────────────────────────────────────────────────
+    // Pressed state
 
     @Composable
     private fun variantPressedContainerColor(variant: ButtonVariant, base: Color): Color =
@@ -133,7 +133,7 @@ object ButtonDefaults {
             ButtonVariant.Destructive -> base
         }
 
-    // ── Focused state ───────────────────────────────────────────────────
+    // Focused state
 
     @Composable
     private fun variantFocusedContainerColor(variant: ButtonVariant, base: Color): Color =
@@ -151,7 +151,7 @@ object ButtonDefaults {
     @Composable
     private fun variantFocusedContentColor(variant: ButtonVariant, base: Color): Color = base
 
-    // ── Hovered state ───────────────────────────────────────────────────
+    // Hovered state
 
     @Composable
     private fun variantHoveredContainerColor(variant: ButtonVariant, base: Color): Color =

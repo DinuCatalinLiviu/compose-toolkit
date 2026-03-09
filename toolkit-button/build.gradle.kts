@@ -1,8 +1,54 @@
+import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
+import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
-    alias(libs.plugins.android.library)
-    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.multiplatform)
+    alias(libs.plugins.compose.multiplatform)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.android.library)
     `maven-publish`
+}
+
+group = "com.yourorg.toolkit"
+version = libs.versions.toolkit.get()
+
+kotlin {
+    applyDefaultHierarchyTemplate()
+
+    androidTarget {
+        publishLibraryVariants("release")
+        @OptIn(ExperimentalKotlinGradlePluginApi::class)
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_11)
+        }
+    }
+
+    iosX64()
+    iosArm64()
+    iosSimulatorArm64()
+
+    jvm("desktop")
+
+    @OptIn(ExperimentalWasmDsl::class)
+    wasmJs { browser() }
+
+    sourceSets {
+        commonMain.dependencies {
+            implementation(compose.runtime)
+            implementation(compose.ui)
+            implementation(compose.foundation)
+            implementation(compose.material3)
+        }
+        androidMain.dependencies {
+            // toolkit-core is only needed here for @Preview wrappers
+            implementation(project(":toolkit-core"))
+            implementation(libs.androidx.ui.tooling.preview)
+        }
+        commonTest.dependencies {
+            implementation(kotlin("test"))
+        }
+    }
 }
 
 android {
@@ -17,12 +63,6 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
-    kotlinOptions {
-        jvmTarget = "11"
-    }
-    buildFeatures {
-        compose = true
-    }
 
     publishing {
         singleVariant("release") {
@@ -31,15 +71,11 @@ android {
     }
 }
 
-dependencies {
-    implementation(project(":toolkit-core"))
-
-    implementation(platform(libs.androidx.compose.bom))
-    implementation(libs.androidx.ui)
-    implementation(libs.androidx.ui.graphics)
-    implementation(libs.androidx.ui.tooling.preview)
-    implementation(libs.androidx.material3)
-    debugImplementation(libs.androidx.ui.tooling)
-
-    testImplementation(libs.junit)
+publishing {
+    publications.withType<MavenPublication> {
+        pom {
+            name.set("toolkit-button")
+            description.set("Button, IconButton, and ToggleIconButton components for compose-toolkit.")
+        }
+    }
 }

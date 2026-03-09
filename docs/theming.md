@@ -36,55 +36,55 @@ Implement it once for your brand and pass the instance to `ToolkitTheme`.
 ```kotlin
 object AcmeColorTokens : ToolkitColorTokens {
 
-    // ── Light mode – Primary ──────────────────────────────────────────────
-    override val primary              = Color(0xFF1A56DB)
-    override val onPrimary            = Color(0xFFFFFFFF)
-    override val primaryContainer     = Color(0xFFD1E4FF)
-    override val onPrimaryContainer   = Color(0xFF001D36)
+    // Light mode – Primary
+    override val primary = Color(0xFF1A56DB)
+    override val onPrimary = Color(0xFFFFFFFF)
+    override val primaryContainer = Color(0xFFD1E4FF)
+    override val onPrimaryContainer = Color(0xFF001D36)
 
-    // ── Light mode – Secondary ────────────────────────────────────────────
-    override val secondary            = Color(0xFF535F70)
-    override val onSecondary          = Color(0xFFFFFFFF)
-    override val secondaryContainer   = Color(0xFFD7E3F7)
+    // Light mode – Secondary
+    override val secondary = Color(0xFF535F70)
+    override val onSecondary = Color(0xFFFFFFFF)
+    override val secondaryContainer = Color(0xFFD7E3F7)
     override val onSecondaryContainer = Color(0xFF101C2B)
 
-    // ── Light mode – Background / Surface ─────────────────────────────────
-    override val background           = Color(0xFFFAFCFF)
-    override val onBackground         = Color(0xFF1A1C1E)
-    override val surface              = Color(0xFFFAFCFF)
-    override val onSurface            = Color(0xFF1A1C1E)
-    override val surfaceVariant       = Color(0xFFDFE2EB)
-    override val onSurfaceVariant     = Color(0xFF43474E)
-    override val outline              = Color(0xFF73777F)
+    // Light mode – Background / Surface
+    override val background = Color(0xFFFAFCFF)
+    override val onBackground = Color(0xFF1A1C1E)
+    override val surface = Color(0xFFFAFCFF)
+    override val onSurface = Color(0xFF1A1C1E)
+    override val surfaceVariant = Color(0xFFDFE2EB)
+    override val onSurfaceVariant = Color(0xFF43474E)
+    override val outline = Color(0xFF73777F)
 
-    // ── Semantic (mode-agnostic) ──────────────────────────────────────────
-    override val success              = Color(0xFF1A7A4A)
-    override val onSuccess            = Color(0xFFFFFFFF)
-    override val warning              = Color(0xFFB45300)
-    override val onWarning            = Color(0xFFFFFFFF)
-    override val error                = Color(0xFFBA1A1A)
-    override val onError              = Color(0xFFFFFFFF)
+    // Semantic (mode-agnostic)
+    override val success = Color(0xFF1A7A4A)
+    override val onSuccess = Color(0xFFFFFFFF)
+    override val warning = Color(0xFFB45300)
+    override val onWarning = Color(0xFFFFFFFF)
+    override val error = Color(0xFFBA1A1A)
+    override val onError = Color(0xFFFFFFFF)
 
-    // ── Dark mode – Primary ───────────────────────────────────────────────
-    override val primaryDark              = Color(0xFF9ECAFF)
-    override val onPrimaryDark            = Color(0xFF003258)
-    override val primaryContainerDark     = Color(0xFF004A77)
-    override val onPrimaryContainerDark   = Color(0xFFD1E4FF)
+    // Dark mode – Primary
+    override val primaryDark = Color(0xFF9ECAFF)
+    override val onPrimaryDark = Color(0xFF003258)
+    override val primaryContainerDark = Color(0xFF004A77)
+    override val onPrimaryContainerDark = Color(0xFFD1E4FF)
 
-    // ── Dark mode – Secondary ─────────────────────────────────────────────
-    override val secondaryDark            = Color(0xFFBBC7DB)
-    override val onSecondaryDark          = Color(0xFF253140)
-    override val secondaryContainerDark   = Color(0xFF3B4858)
+    // Dark mode – Secondary
+    override val secondaryDark = Color(0xFFBBC7DB)
+    override val onSecondaryDark = Color(0xFF253140)
+    override val secondaryContainerDark = Color(0xFF3B4858)
     override val onSecondaryContainerDark = Color(0xFFD7E3F7)
 
-    // ── Dark mode – Background / Surface ──────────────────────────────────
-    override val backgroundDark           = Color(0xFF1A1C1E)
-    override val onBackgroundDark         = Color(0xFFE2E2E6)
-    override val surfaceDark              = Color(0xFF1A1C1E)
-    override val onSurfaceDark            = Color(0xFFE2E2E6)
-    override val surfaceVariantDark       = Color(0xFF43474E)
-    override val onSurfaceVariantDark     = Color(0xFFC3C7CF)
-    override val outlineDark              = Color(0xFF8D9199)
+    // Dark mode – Background / Surface
+    override val backgroundDark = Color(0xFF1A1C1E)
+    override val onBackgroundDark = Color(0xFFE2E2E6)
+    override val surfaceDark = Color(0xFF1A1C1E)
+    override val onSurfaceDark = Color(0xFFE2E2E6)
+    override val surfaceVariantDark = Color(0xFF43474E)
+    override val onSurfaceVariantDark = Color(0xFFC3C7CF)
+    override val outlineDark = Color(0xFF8D9199)
 }
 ```
 
@@ -146,8 +146,8 @@ Pass a `fontFamily` to apply your brand typeface across the entire M3 type scale
 // res/font/inter_regular.ttf, inter_medium.ttf, inter_bold.ttf
 val InterFamily = FontFamily(
     Font(R.font.inter_regular, FontWeight.Normal),
-    Font(R.font.inter_medium,  FontWeight.Medium),
-    Font(R.font.inter_bold,    FontWeight.Bold),
+    Font(R.font.inter_medium, FontWeight.Medium),
+    Font(R.font.inter_bold, FontWeight.Bold),
 )
 
 ToolkitTheme(

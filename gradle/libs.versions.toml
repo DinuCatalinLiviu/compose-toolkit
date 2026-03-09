@@ -1,7 +1,8 @@
 [versions]
-toolkit             = "0.1.0"
-agp                 = "8.11.2"
-kotlin              = "2.0.21"
+toolkit              = "0.1.0"
+agp                  = "8.11.2"
+kotlin               = "2.1.0"
+composeMultiplatform = "1.8.0"
 compileSdk          = "36"
 minSdk              = "25"
 coreKtx             = "1.17.0"
@@ -29,7 +30,9 @@ androidx-ui-test-junit4             = { group = "androidx.compose.ui",        na
 androidx-material3                  = { group = "androidx.compose.material3", name = "material3" }
 
 [plugins]
-android-application = { id = "com.android.application", version.ref = "agp" }
-android-library     = { id = "com.android.library",     version.ref = "agp" }
-kotlin-android      = { id = "org.jetbrains.kotlin.android",        version.ref = "kotlin" }
-kotlin-compose      = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+android-application  = { id = "com.android.application",                  version.ref = "agp" }
+android-library      = { id = "com.android.library",                      version.ref = "agp" }
+kotlin-android       = { id = "org.jetbrains.kotlin.android",             version.ref = "kotlin" }
+kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform",       version.ref = "kotlin" }
+compose-multiplatform = { id = "org.jetbrains.compose",                  version.ref = "composeMultiplatform" }
+kotlin-compose       = { id = "org.jetbrains.kotlin.plugin.compose",      version.ref = "kotlin" }
